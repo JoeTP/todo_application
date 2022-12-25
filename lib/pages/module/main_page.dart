@@ -22,13 +22,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      //create db on the instant of opening the application
+      //+create db on the instant of opening the application
       create: (context) => ToDoCubit()..createDataBase(),
       child: BlocConsumer<ToDoCubit, ToDoStates>(
-        listener: (BuildContext context, ToDoStates state) {
+        listener: ( context,  state) {
           if (state is InsertDatabaseState) Navigator.pop(context);
         },
-        builder: (BuildContext context, ToDoStates state) {
+        builder: ( context,  state) {
           ToDoCubit cubit = ToDoCubit.get(context);
 
           return Scaffold(
@@ -54,20 +54,9 @@ class HomePage extends StatelessWidget {
                       date: dateController.text,
                       time: timeController.text,
                     );
-                    //     .then((value) {
-                    //       // if future error: watch video 86-Database with cubit @16:00
-                    //   cubit.getDataFromDataBase(cubit.db).then((value) {
-                    //     cubit.tasks = value;
-                    //     Navigator.pop(context);
-                    //   });
-                    //   cubit.bottomSheetShow = false;
-                    //     cubit.fabIcon = Icons.add;
-                    //
-                    // });
                   }
                 } else {
-                  scaffoldKey.currentState
-                      ?.showBottomSheet(
+                  scaffoldKey.currentState?.showBottomSheet(
                         (context) => Container(
                           color: Colors.white,
                           padding: EdgeInsets.all(20),
@@ -88,12 +77,11 @@ class HomePage extends StatelessWidget {
                                     }
                                   },
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
+                                SizedBox(   height: 20),
                                 DefaultFormField(
                                   controller: timeController,
                                   isPassword: false,
+                                  readOnly: true,
                                   label: 'Task Time',
                                   type: TextInputType.datetime,
                                   prefix: Icons.watch_later_outlined,
@@ -112,13 +100,12 @@ class HomePage extends StatelessWidget {
                                     }
                                   },
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
+                                SizedBox(height: 20),
                                 DefaultFormField(
                                   controller: dateController,
                                   isPassword: false,
                                   label: 'Task Date',
+                                  readOnly: true,
                                   type: TextInputType.datetime,
                                   prefix: Icons.calendar_month,
                                   onTap: () {
@@ -143,9 +130,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         elevation: 20,
-                      )
-                      .closed
-                      .then((value) {
+                      ).closed.then((value) {
                     cubit.changeBottomSheetState(
                         icon: Icons.edit, isShow: false);
                   });

@@ -14,6 +14,7 @@ class DefaultFormField extends StatelessWidget {
   final VoidCallback? pressSuffix;
   final IconData? prefix;
   final IconData? suffix;
+  final bool readOnly;
 
   bool isPassword = false;
   bool enable;
@@ -25,6 +26,7 @@ class DefaultFormField extends StatelessWidget {
     required this.label,
     required this.type,
     this.onSubmit,
+    this.readOnly = false,
     this.onChanged,
     this.validate,
     this.onTap,
@@ -45,6 +47,7 @@ class DefaultFormField extends StatelessWidget {
       onChanged: onChanged,
       validator: validate,
       onTap: onTap,
+      readOnly: readOnly,
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(),
@@ -143,167 +146,67 @@ class DefaultFormField extends StatelessWidget {
 
 
 
-Widget BuildTaskItem(Map model,context) => Dismissible(
-  key: Key(model['id'].toString()),
-  child:   Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Row(
-      children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: Colors.blue,
-          child: Text(
-            "${model['time']}",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.white,
+Widget BuildTaskItem(Map model,context) => Padding(
+  padding: const EdgeInsets.all(20.0),
+  child: Row(
+    children: [
+      CircleAvatar(
+        radius: 50,
+        backgroundColor: Colors.blue,
+        child: Text(
+          "${model['time']}",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      SizedBox(
+        width: 20,
+      ),
+      Expanded(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "${model['title']}",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
             ),
-          ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${model['title']}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
+            Text(
+              "${model['date']}",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey,
               ),
-              Text(
-                "${model['date']}",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        SizedBox(
-          width: 20,
-        ),
-        IconButton(
-            icon: Icon(
-              Icons.check_box,
-              color: Colors.green,
-            ), onPressed: (){
-          ToDoCubit.get(context).updateDataBase(status: 'done', id: model['id']);
-        }),
-        IconButton(
-            icon: Icon(
-              Icons.archive_rounded,
-              color: Colors.black45,
-            ), onPressed: (){
-          ToDoCubit.get(context).updateDataBase(status: 'archive', id: model['id']);
-        }),
-      ],
-    ),
+      ),
+      SizedBox(
+        width: 20,
+      ),
+      IconButton(
+          icon: Icon(
+            Icons.check_box,
+            color: Colors.green,
+          ), onPressed: (){
+        ToDoCubit.get(context).updateDataBase(status: 'done', id: model['id']);
+      }),
+      IconButton(
+          icon: Icon(
+            Icons.archive_rounded,
+            color: Colors.black45,
+          ), onPressed: (){
+        ToDoCubit.get(context).updateDataBase(status: 'archive', id: model['id']);
+      }),
+    ],
   ),
-  onDismissed: (direction) {
-    ToDoCubit.get(context).deleteFromDataBase(id: model['id']);
-  },
 );
 
 
 
-//
-// Widget buildTaskItem(Map model) => Container(
-//   width: double.infinity,
-//   height: 100,
-//   decoration: BoxDecoration(
-//     color: Colors.black12, borderRadius: BorderRadius.circular(20),),
-//   child: Container(
-//     margin: EdgeInsets.symmetric(horizontal: 10),
-//     child: Row(
-//       children: [
-//         CircleAvatar(
-//           child: Text('${model['time']}'),
-//           radius: 40,
-//         ),
-//         SizedBox(width: 10,),
-//         Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             MediumText(text: '${model['title']}',),
-//             SizedBox(height: 2,),
-//             SmallText(text: '${model['date']}'),
-//           ],
-//         )
-//       ],
-//     ),
-//   ),
-// );
-
-// Widget taskItem(Map model, context) => Dismissible(
-//       key: Key(model['id'.toString()]),
-//       child: Padding(
-//         padding: const EdgeInsets.all(15.0),
-//         child: Row(
-//           children: [
-//             CircleAvatar(
-//               radius: 40,
-//               child: Text(
-//                 '${model['time']}',
-//               ),
-//             ),
-//             SizedBox(
-//               width: 15,
-//             ),
-//             Expanded(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   Text(
-//                     '${model['title']}',
-//                     style: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 18,
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 5,
-//                   ),
-//                   Text(
-//                     '${model['date']}',
-//                     style: TextStyle(),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(
-//               width: 15,
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 AppCubit.get(context)
-//                     .updateDate(status: 'done', id: model['id']);
-//               },
-//               icon: Icon(
-//                 Icons.check_circle_rounded,
-//                 color: Colors.green,
-//               ),
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 AppCubit.get(context)
-//                     .updateDate(status: 'archive', id: model['id']);
-//               },
-//               icon: Icon(Icons.archive),
-//               color: Colors.black38,
-//             )
-//           ],
-//         ),
-//       ),
-//       onDismissed: (direction) {
-//         AppCubit.get(context).deleteDate(id: model['id']);
-//       },
-//     );

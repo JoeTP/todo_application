@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../components/components.dart';
 import '../../components/task_item.dart';
 import '../../cubit/cubit.dart';
@@ -19,7 +18,6 @@ class DoneTasks extends StatelessWidget {
           return ListView.separated(
             itemBuilder: (context, index) => TaskItem(
               model: tasks[index],
-              // model: tasks[index],
             ),
             separatorBuilder: (context, index) => SizedBox(height: 10),
             itemCount: tasks.length,

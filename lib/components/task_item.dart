@@ -22,14 +22,14 @@ class TaskItem extends StatelessWidget {
         ),
         child: Container(
           width: double.maxFinite,
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
               CircleAvatar(
                 child: Text('${model['time']}'),
                 radius: 40,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -40,30 +40,30 @@ class TaskItem extends StatelessWidget {
                     Text(
                       '${model['title']}',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                           // fontSize: 20
                           ),
                     ),
                     // MediumText(text: '${model['title']}',textOverflow: true,),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
                     SmallText(text: '${model['date']}'),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               IconButton(
                   onPressed: () {
                     ToDoCubit.get(context).updateDataBase(status: 'done',id: model['id']);
-                  }, icon: Icon(Icons.check_circle_outline)),
+                  }, icon: const Icon(Icons.check_circle_outline)),
               IconButton(
                   onPressed: () {
                     ToDoCubit.get(context).updateDataBase(status: 'archive',id: model['id']);
 
-                  }, icon: Icon(Icons.archive_outlined)),
+                  }, icon: const Icon(Icons.archive_outlined)),
             ],
           ),
         ),
