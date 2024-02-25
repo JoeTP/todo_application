@@ -222,7 +222,7 @@ class ToDoCubit extends Cubit<ToDoStates> {
     });
   }
 
-  Future<void> onCreate(Database db, int version)async {
+  Future<void> onCreate(Database db, int version) async {
     // When creating the db, create the table
     db
         .execute(
@@ -234,7 +234,7 @@ class ToDoCubit extends Cubit<ToDoStates> {
     });
   }
 
-  Future<void> onOpen(db) async{
+  Future<void> onOpen(db) async {
     print(newTasks);
 
     getDataFromDataBase(db);
